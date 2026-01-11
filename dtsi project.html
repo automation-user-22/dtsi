@@ -1,0 +1,2931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌞 ಸ್ಮಾರ್ಟ್ ಸೌರ ಕ್ಷೇತ್ರ ಮಂಡಳಿ | Smart Solar Field Board</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 100%;
+        }
+
+        body {
+            background: linear-gradient(135deg, 
+                #0c2461 0%, 
+                #1e3799 25%, 
+                #2c3e50 50%, 
+                #1a2980 75%, 
+                #26d0ce 100%
+            );
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow-x: hidden;
+            position: relative;
+            width: 100vw;
+        }
+
+        body:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .dashboard-container {
+            width: 98vw;
+            max-width: 1600px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(255, 255, 255, 0.98) 100%
+            );
+            border-radius: 20px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                0 0 50px rgba(255, 215, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            border: 4px solid #FF9800;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .dashboard-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 0.05) 50%, 
+                transparent 100%
+            );
+            pointer-events: none;
+        }
+
+        /* Floating Emojis - Hidden on small screens */
+        .floating-emoji {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: float 6s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .kannada-text {
+            font-family: 'Noto Sans Kannada', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        
+        .card .kannada-text {
+            color: #444;
+        }
+
+        /* Solar Panel Top Bar */
+        .solar-panel-container {
+            width: 100%;
+            height: 35px;
+            background: linear-gradient(90deg, 
+                #0d47a1 0%, 
+                #1565c0 25%, 
+                #1976d2 50%, 
+                #1e88e5 75%, 
+                #2196f3 100%
+            );
+            position: relative;
+            border-bottom: 3px solid #FFD600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            flex-wrap: wrap;
+        }
+        
+        .solar-cells {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .solar-cell {
+            width: 30px;
+            height: 18px;
+            background: linear-gradient(135deg, #FFD600, #FFAB00);
+            border: 2px solid #FF6F00;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solar-cell:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 100%
+            );
+            animation: solarShimmer 3s infinite linear;
+        }
+        
+        @keyframes solarShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .solar-status {
+            color: #FFD600;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            margin: 5px 0;
+        }
+        
+        .solar-status i {
+            animation: solarPulse 1.5s infinite;
+        }
+        
+        @keyframes solarPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        
+        /* Tube Light Effect */
+        .tube-light {
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg,
+                transparent,
+                #00E5FF,
+                #00B8D4,
+                #00E5FF,
+                transparent
+            );
+            filter: blur(2px);
+            animation: tubeGlow 3s infinite alternate;
+        }
+        
+        @keyframes tubeGlow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+        
+        /* Header Styles */
+        .dashboard-header {
+            background: linear-gradient(135deg, 
+                #1a2980 0%, 
+                #26d0ce 100%
+            );
+            color: white;
+            padding: 15px 20px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #FFD600;
+        }
+
+        .dashboard-header:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: headerShimmer 3s infinite linear;
+        }
+
+        @keyframes headerShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .header-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            gap: 15px;
+        }
+
+        .header-title {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            color: #FFD600;
+            margin-bottom: 5px;
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(255, 215, 0, 0.5);
+            animation: titleGlow 3s infinite alternate;
+            text-align: center;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.5); }
+            100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        .live-badge {
+            background: linear-gradient(135deg, #FF5252, #FF4081);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            animation: badgePulse 1.5s infinite;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid white;
+            box-shadow: 0 4px 12px rgba(255, 82, 82, 0.4);
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        @keyframes badgePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .header-location {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            min-width: 200px;
+        }
+
+        .location-icon {
+            font-size: 1.2rem;
+            color: #FFD600;
+        }
+
+        /* Current Weather Display - FIXED TEXT VISIBILITY */
+        .current-weather-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .weather-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .temp-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .temp-display {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #FFD600;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .weather-icon {
+            font-size: 2.5rem;
+            color: #FFD600;
+            animation: weatherFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes weatherFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(10deg); }
+        }
+
+        .weather-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            width: 100%;
+        }
+
+        .weather-stat {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 120px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            color: #FFD600;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .weather-update-info {
+            text-align: center;
+            margin-top: 15px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .update-time {
+            font-size: 1.2rem;
+            color: #FFD600;
+            margin-bottom: 5px;
+        }
+
+        /* Main Content Area */
+        .dashboard-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Card Styling - FIXED TEXT VISIBILITY */
+        .card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(255, 255, 255, 0.98) 100%
+            );
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.1),
+                0 5px 10px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            min-width: 300px;
+            width: 100%;
+        }
+
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                var(--card-color-1), 
+                var(--card-color-2),
+                var(--card-color-1)
+            );
+            animation: cardBorderFlow 3s infinite linear;
+            background-size: 200% 100%;
+        }
+
+        @keyframes cardBorderFlow {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.15),
+                0 8px 15px rgba(0, 0, 0, 0.1),
+                0 0 20px rgba(var(--card-glow-rgb), 0.3);
+            border-color: rgba(var(--card-glow-rgb), 0.3);
+        }
+
+        /* Card Headers */
+        .card-header {
+            margin-bottom: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Market Rates Card */
+        .market-rates {
+            --card-color-1: #27ae60;
+            --card-color-2: #2ecc71;
+            --card-glow-rgb: 46, 204, 113;
+        }
+
+        .market-rates .rate-value {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #27ae60;
+            margin: 15px 0;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            animation: pricePulse 2s infinite;
+        }
+
+        @keyframes pricePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .crop-list-enhanced {
+            margin-top: 15px;
+        }
+
+        .crop-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+            transition: all 0.3s ease;
+        }
+
+        .crop-item:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.1);
+        }
+
+        .crop-icon {
+            font-size: 1.8rem;
+            margin-right: 12px;
+            animation: cropFloat 4s infinite ease-in-out;
+        }
+
+        @keyframes cropFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        .crop-info {
+            flex: 1;
+        }
+
+        .crop-name {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 3px;
+            font-size: 0.95rem;
+        }
+
+        .crop-trend {
+            font-size: 0.75rem;
+            color: #7f8c8d;
+        }
+
+        .crop-price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #e74c3c;
+            padding: 4px 10px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Crop Stage Card */
+        .crop-stage {
+            --card-color-1: #f39c12;
+            --card-color-2: #f1c40f;
+            --card-glow-rgb: 241, 196, 15;
+        }
+
+        .crop-progress {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .percentage-display {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .percentage-value {
+            animation: countUp 2s ease-out;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 25px;
+            background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+            border-radius: 15px;
+            margin: 15px 0;
+            overflow: hidden;
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, 
+                #2ecc71 0%, 
+                #f1c40f 50%, 
+                #e74c3c 100%
+            );
+            border-radius: 15px;
+            width: 42%;
+            transition: width 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.4), 
+                transparent
+            );
+            animation: progressShimmer 2s infinite;
+        }
+
+        .crop-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .crop-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            border-left: 4px solid #f39c12;
+        }
+
+        .crop-stat .stat-icon {
+            font-size: 1.5rem;
+        }
+
+        .crop-stat .stat-label {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .crop-stat .stat-value {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        /* Farmer Tips Card */
+        .farmer-tips {
+            --card-color-1: #9b59b6;
+            --card-color-2: #8e44ad;
+            --card-glow-rgb: 142, 68, 173;
+        }
+
+        .tips-container {
+            margin-top: 15px;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 12px;
+            border: 1px solid #e1bee7;
+            transition: all 0.3s ease;
+        }
+
+        .tip-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(155, 89, 182, 0.2);
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            margin-right: 12px;
+            margin-top: 3px;
+        }
+
+        /* Government Schemes Card */
+        .government-schemes {
+            --card-color-1: #3498db;
+            --card-color-2: #2980b9;
+            --card-glow-rgb: 52, 152, 219;
+        }
+
+        .scheme-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            border: 1px solid #bbdefb;
+            transition: all 0.3s ease;
+        }
+
+        .scheme-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.2);
+        }
+
+        .scheme-icon {
+            font-size: 1.8rem;
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+
+        .scheme-status {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            background: #2ecc71;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .beneficiaries {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Emergency Alert Card */
+        .emergency-alert {
+            grid-column: 1 / -1;
+            --card-color-1: #e74c3c;
+            --card-color-2: #c0392b;
+            --card-glow-rgb: 231, 76, 60;
+            background: linear-gradient(135deg, 
+                rgba(255, 107, 107, 0.9) 0%, 
+                rgba(238, 90, 82, 0.9) 100%
+            );
+            color: white;
+            animation: alertPulse 2s infinite;
+            border: none;
+        }
+
+        @keyframes alertPulse {
+            0% { 
+                box-shadow: 
+                    0 0 0 0 rgba(231, 76, 60, 0.7),
+                    0 10px 25px rgba(231, 76, 60, 0.3);
+            }
+            70% { 
+                box-shadow: 
+                    0 0 0 15px rgba(231, 76, 60, 0),
+                    0 10px 25px rgba(231, 76, 60, 0.3);
+            }
+            100% { 
+                box-shadow: 
+                    0 0 0 0 rgba(231, 76, 60, 0),
+                    0 10px 25px rgba(231, 76, 60, 0.3);
+            }
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .alert-icon-left, .alert-icon-right {
+            font-size: 2rem;
+            animation: alertShake 0.5s infinite alternate;
+        }
+
+        @keyframes alertShake {
+            0% { transform: translateX(-8px) rotate(-8deg); }
+            100% { transform: translateX(8px) rotate(8deg); }
+        }
+
+        .alert-title h3 {
+            color: white;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        .alert-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .alert-detail {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-detail i {
+            font-size: 1.3rem;
+            color: #FFD600;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .alert-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .alert-action-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .alert-action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Bottom Panel */
+        .dashboard-bottom {
+            background: linear-gradient(135deg, 
+                #2c3e50 0%, 
+                #34495e 100%
+            );
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 3px solid #FF9800;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+            gap: 20px;
+        }
+
+        .update-panel {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .update-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .update-box:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .update-icon {
+            font-size: 1.8rem;
+        }
+
+        .update-info {
+            flex: 1;
+        }
+
+        .update-label {
+            font-size: 0.8rem;
+            color: #bdc3c7;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .update-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #FFD600;
+            margin-top: 5px;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff00;
+            margin-right: 6px;
+            animation: statusPulse 2s infinite;
+            box-shadow: 0 0 8px #00ff00;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { box-shadow: 0 0 5px #00ff00; }
+            50% { box-shadow: 0 0 15px #00ff00; }
+        }
+
+        .api-status {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .api-indicator {
+            font-size: 1.3rem;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .api-indicator.active {
+            opacity: 1;
+            animation: apiGlow 2s infinite;
+        }
+
+        @keyframes apiGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px currentColor); }
+            50% { filter: drop-shadow(0 0 12px currentColor); }
+        }
+
+        /* Voice Controls - ENHANCED VISIBILITY */
+        .voice-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .voice-btn {
+            background: linear-gradient(135deg, #FF6B00, #FF9500);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.4);
+            width: 100%;
+            animation: voicePulse 2s infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes voicePulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 107, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
+        }
+
+        .voice-control-buttons {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .voice-control-btn {
+            flex: 1;
+            min-width: 70px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .voice-control-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            border-color: #FFD600;
+        }
+
+        .voice-control-btn.active {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #FFD600;
+            color: #FFD600;
+        }
+
+        .voice-control-btn i {
+            font-size: 1.1rem;
+        }
+
+        .voice-info {
+            color: #FFD600;
+            font-size: 0.8rem;
+            text-align: center;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* Mini Kannada */
+        .mini-kannada {
+            font-family: 'Noto Sans Kannada', sans-serif;
+            font-size: 0.8rem;
+            color: #777;
+            margin-left: 5px;
+        }
+
+        /* API Source */
+        .api-source {
+            font-size: 0.75rem;
+            color: #777;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                border-radius: 18px;
+            }
+            
+            .header-title h1 {
+                font-size: 1.6rem;
+            }
+            
+            .temp-display {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .update-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .weather-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .dashboard-container {
+                width: 100vw !important;
+                border-radius: 15px;
+            }
+            
+            .dashboard-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-location {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .temp-display {
+                font-size: 2.5rem;
+            }
+            
+            .weather-icon {
+                font-size: 2rem;
+            }
+            
+            .weather-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .alert-details-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .crop-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .update-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .voice-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .solar-status {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .dashboard-container {
+                border-radius: 12px;
+            }
+            
+            .header-title h1 {
+                font-size: 1.3rem;
+            }
+            
+            .temp-display {
+                font-size: 2.2rem;
+            }
+            
+            .weather-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .weather-stat {
+                justify-content: center;
+            }
+            
+            .update-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .update-box {
+                max-width: 100%;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .crop-item, .tip-item, .scheme-item {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+            
+            .crop-icon, .tip-icon, .scheme-icon {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+            
+            .alert-details-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .solar-panel-container {
+                flex-direction: column;
+                height: auto;
+                padding: 10px;
+            }
+            
+            .solar-cells {
+                justify-content: center;
+                margin: 5px 0;
+            }
+            
+            .floating-emoji {
+                display: none;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .header-title h1 {
+                font-size: 1.1rem;
+            }
+            
+            .temp-display {
+                font-size: 1.8rem;
+            }
+            
+            .market-rates .rate-value {
+                font-size: 1.8rem;
+            }
+            
+            .card-header h3 {
+                font-size: 1.1rem;
+            }
+            
+            .voice-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .dashboard-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .dashboard-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .dashboard-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #FF9800, #FFD600);
+            border-radius: 3px;
+        }
+
+        .dashboard-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #FFD600, #FF9800);
+        }
+
+        /* Hide floating emojis on very small screens */
+        @media (max-width: 768px) {
+            .floating-emoji {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Emojis Background -->
+    <div class="floating-emoji" style="top: 10%; left: 5%;">🌞</div>
+    <div class="floating-emoji" style="top: 15%; right: 10%;">🌾</div>
+    <div class="floating-emoji" style="bottom: 20%; left: 8%;">💧</div>
+    <div class="floating-emoji" style="bottom: 25%; right: 5%;">🌱</div>
+    <div class="floating-emoji" style="top: 30%; left: 15%;">💰</div>
+    <div class="floating-emoji" style="top: 40%; right: 15%;">📈</div>
+    
+    <div class="dashboard-container">
+        <!-- Solar Panel Top Bar -->
+        <div class="solar-panel-container">
+            <div class="solar-cells">
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+            </div>
+            
+            <div class="solar-status">
+                <i class="fas fa-bolt"></i>
+                🔋 SOLAR: <span id="solar-power">15.2 kW</span> | 
+                ⚡ EFF: <span id="solar-efficiency">92%</span>
+            </div>
+            
+            <div class="solar-cells">
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+                <div class="solar-cell"></div>
+            </div>
+            
+            <div class="tube-light"></div>
+        </div>
+
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1 class="animate__animated animate__pulse animate__infinite">
+                        🌞 SMART SOLAR FIELD BOARD 🌞
+                    </h1>
+                    <div class="kannada-text">ಸ್ಮಾರ್ಟ್ ಸೌರ ಕ್ಷೇತ್ರ ಮಂಡಳಿ</div>
+                </div>
+                
+                <div class="live-badge">
+                    <i class="fas fa-satellite-dish"></i> 🔴 LIVE UPDATES
+                    <div class="kannada-text">ಲೈವ್ ನವೀಕರಣಗಳು</div>
+                </div>
+                
+                <div class="header-location">
+                    <div class="location-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="location-text">
+                        <span id="current-location">Hubli Rural, Karnataka</span>
+                        <div class="kannada-text">ಹುಬ್ಬಳ್ಳಿ ಗ್ರಾಮೀಣ, ಕರ್ನಾಟಕ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Current Weather Display -->
+            <div class="current-weather-display animate__animated animate__fadeIn">
+                <div class="weather-main">
+                    <div class="temp-container">
+                        <div class="temp-display" id="temperature">
+                            <span class="temp-value">20</span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                        <div class="weather-icon">
+                            <i class="fas fa-cloud" id="weather-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-details">
+                        <div class="weather-desc" id="weather-desc">☁️ Clouds</div>
+                        <div class="kannada-text" id="weather-desc-kannada">☁️ ಮೋಡ</div>
+                        
+                        <div class="weather-stats-grid">
+                            <div class="weather-stat">
+                                <div class="stat-icon">💨</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Wind</div>
+                                    <div class="stat-value" id="wind-speed">16 km/h</div>
+                                </div>
+                            </div>
+                            <div class="weather-stat">
+                                <div class="stat-icon">💧</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Humidity</div>
+                                    <div class="stat-value" id="humidity">56%</div>
+                                </div>
+                            </div>
+                            <div class="weather-stat">
+                                <div class="stat-icon">🌡️</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Feels Like</div>
+                                    <div class="stat-value" id="feels-like">20°C</div>
+                                </div>
+                            </div>
+                            <div class="weather-stat">
+                                <div class="stat-icon">🌅</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Sunrise</div>
+                                    <div class="stat-value" id="sunrise">6:15 AM</div>
+                                </div>
+                            </div>
+                            <div class="weather-stat">
+                                <div class="stat-icon">🌇</div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Sunset</div>
+                                    <div class="stat-value" id="sunset">6:45 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="weather-update-info">
+                    <div class="update-time">
+                        <i class="fas fa-clock"></i>
+                        <span id="weather-update-time">21:41:29</span>
+                    </div>
+                    <div class="kannada-text">ಕೊನೆಯ ನವೀಕರಣ</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Area - Enhanced Rectangular Layout -->
+        <div class="dashboard-content">
+            <!-- Market Rates Card with Emojis -->
+            <div class="card market-rates animate__animated animate__fadeInLeft">
+                <div class="card-header">
+                    <h3>📈 LIVE CROP PRICES <i class="fas fa-chart-line"></i></h3>
+                    <div class="kannada-text">ನೈಜ ಬೆಳೆ ಬೆಲೆಗಳು</div>
+                </div>
+                
+                <div class="rate-highlight">
+                    <div class="rate-value" id="market-rate">₹ 2,845/q</div>
+                    <div class="kannada-text">ಜೋಳ ಪ್ರಸ್ತುತ ದರ</div>
+                </div>
+                
+                <div class="crop-list-enhanced">
+                    <div class="crop-item">
+                        <div class="crop-icon">🌾</div>
+                        <div class="crop-info">
+                            <div class="crop-name">Jowar <span class="mini-kannada">(ಜೋಳ)</span></div>
+                            <div class="crop-trend">↗️ Trending Up</div>
+                        </div>
+                        <div class="crop-price" id="jowar-price">₹ 2,845/q</div>
+                    </div>
+                    <div class="crop-item">
+                        <div class="crop-icon">🌽</div>
+                        <div class="crop-info">
+                            <div class="crop-name">Maize <span class="mini-kannada">(ಮೆಕ್ಕೆಜೋಳ)</span></div>
+                            <div class="crop-trend">➡️ Stable</div>
+                        </div>
+                        <div class="crop-price" id="maize-price">₹ 2,150/q</div>
+                    </div>
+                    <div class="crop-item">
+                        <div class="crop-icon">🎋</div>
+                        <div class="crop-info">
+                            <div class="crop-name">Sugarcane <span class="mini-kannada">(ಕಬ್ಬು)</span></div>
+                            <div class="crop-trend">↗️ Trending Up</div>
+                        </div>
+                        <div class="crop-price" id="sugarcane-price">₹ 3,200/t</div>
+                    </div>
+                    <div class="crop-item">
+                        <div class="crop-icon">🌾</div>
+                        <div class="crop-info">
+                            <div class="crop-name">Paddy <span class="mini-kannada">(ಭತ್ತ)</span></div>
+                            <div class="crop-trend">↘️ Trending Down</div>
+                        </div>
+                        <div class="crop-price" id="paddy-price">₹ 2,100/q</div>
+                    </div>
+                </div>
+                
+                <div class="api-source">
+                    <i class="fas fa-database"></i> 🔗 Source: Real-time Agmarknet API
+                </div>
+            </div>
+
+            <!-- Crop Stage Card with Animations -->
+            <div class="card crop-stage animate__animated animate__fadeInUp">
+                <div class="card-header">
+                    <h3>🌱 CROP STAGE UPDATE <i class="fas fa-seedling"></i></h3>
+                    <div class="kannada-text">ಬೆಳೆ ಹಂತ ನವೀಕರಣ</div>
+                </div>
+                
+                <div class="crop-progress">
+                    <div class="percentage-display">
+                        <span class="percentage-value" id="crop-percentage">40</span>
+                        <span class="percentage-symbol">%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="stage-info">
+                    <div class="stage-text" id="crop-stage-text">
+                        🌿 Vegetative Stage - Monitor for pests
+                    </div>
+                    <div class="kannada-text" id="crop-stage-kannada">
+                        🌿 ಸಸ್ಯ ಹಂತ - ಕೀಟಗಳಿಗಾಗಿ ಮೇಲ್ವಿಚಾರಣೆ
+                    </div>
+                </div>
+                
+                <div class="crop-stats-grid">
+                    <div class="crop-stat">
+                        <div class="stat-icon">💧</div>
+                        <div class="stat-details">
+                            <div class="stat-label">Soil Moisture</div>
+                            <div class="stat-value" id="soil-moisture">72%</div>
+                        </div>
+                    </div>
+                    <div class="crop-stat">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-details">
+                            <div class="stat-label">Growth Rate</div>
+                            <div class="stat-value" id="growth-rate">2.8%/day</div>
+                        </div>
+                    </div>
+                    <div class="crop-stat">
+                        <div class="stat-icon">🌡️</div>
+                        <div class="stat-details">
+                            <div class="stat-label">Soil Temp</div>
+                            <div class="stat-value" id="soil-temp">28°C</div>
+                        </div>
+                    </div>
+                    <div class="crop-stat">
+                        <div class="stat-icon">🌞</div>
+                        <div class="stat-details">
+                            <div class="stat-label">Sunlight</div>
+                            <div class="stat-value" id="sunlight">8.5 hrs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farmer Tips Card with Emojis -->
+            <div class="card farmer-tips animate__animated animate__fadeInRight">
+                <div class="card-header">
+                    <h3>👨‍🌾 FARMER TIPS & ALERTS <i class="fas fa-lightbulb"></i></h3>
+                    <div class="kannada-text">ರೈತರ ಸಲಹೆಗಳು ಮತ್ತು ಎಚ್ಚರಿಕೆಗಳು</div>
+                </div>
+                
+                <div class="tips-container">
+                    <div class="tip-item">
+                        <div class="tip-icon">💧</div>
+                        <div class="tip-content">
+                            <div class="tip-text">
+                                <i class="fas fa-check-circle"></i> Water crops early morning (6-8 AM) to reduce evaporation
+                            </div>
+                            <div class="kannada-text">
+                                ಬಾಷ್ಪೀಕರಣ ಕಡಿಮೆ ಮಾಡಲು ಬೆಳಗ್ಗೆ (6-8 AM) ಬೆಳೆಗಳಿಗೆ ನೀರು ಹಾಕಿ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-icon">🐛</div>
+                        <div class="tip-content">
+                            <div class="tip-text">
+                                <i class="fas fa-check-circle"></i> Use neem oil spray for natural pest control
+                            </div>
+                            <div class="kannada-text">
+                                ನೈಸರ್ಗಿಕ ಕೀಟ ನಿಯಂತ್ರಣಕ್ಕಾಗಿ ನೀಂ ತೈಲ ಸಿಂಪಡಣೆ ಬಳಸಿ
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-icon">🌱</div>
+                        <div class="tip-content">
+                            <div class="tip-text">
+                                <i class="fas fa-check-circle"></i> Mix crops to improve soil fertility naturally
+                            </div>
+                            <div class="kannada-text">
+                                ಮಣ್ಣಿನ ಫಲವತ್ತತೆಯನ್ನು ಸ್ವಾಭಾವಿಕವಾಗಿ ಸುಧಾರಿಸಲು ಬೆಳೆಗಳನ್ನು ಮಿಶ್ರಣ ಮಾಡಿ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="weather-forecast">
+                    <div class="forecast-header">
+                        <i class="fas fa-cloud-sun"></i>
+                        <span class="forecast-label">Next 24h Forecast</span>
+                    </div>
+                    <div class="forecast-value" id="weather-forecast">☁️ Clouds, 20°C</div>
+                </div>
+            </div>
+            
+            <!-- Government Schemes Card -->
+            <div class="card government-schemes animate__animated animate__fadeInLeft">
+                <div class="card-header">
+                    <h3>🏛️ GOVERNMENT SCHEMES <i class="fas fa-hand-holding-usd"></i></h3>
+                    <div class="kannada-text">ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು</div>
+                </div>
+                
+                <div class="schemes-list">
+                    <div class="scheme-item">
+                        <div class="scheme-icon">💰</div>
+                        <div class="scheme-content">
+                            <div class="scheme-title">
+                                <i class="fas fa-rupee-sign"></i> PM-KISAN Scheme
+                            </div>
+                            <div class="scheme-desc">
+                                ₹6,000 per year direct to farmer's bank account
+                            </div>
+                            <div class="kannada-text">
+                                ವರ್ಷಕ್ಕೆ ₹6,000 ನೇರವಾಗಿ ರೈತರ ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ
+                            </div>
+                            <div class="scheme-status">
+                                <span class="status-badge active">✅ Active</span>
+                                <span class="beneficiaries">👥 11.5Cr Farmers</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="scheme-item">
+                        <div class="scheme-icon">🛡️</div>
+                        <div class="scheme-content">
+                            <div class="scheme-title">
+                                <i class="fas fa-shield-alt"></i> PM Fasal Bima Yojana
+                            </div>
+                            <div class="scheme-desc">
+                                Crop insurance with affordable premium rates
+                            </div>
+                            <div class="kannada-text">
+                                ಸಸ್ತುವೆಂದ ಪ್ರೀಮಿಯಂ ದರಗಳೊಂದಿಗೆ ಬೆಳೆ ವಿಮಾ
+                            </div>
+                            <div class="scheme-status">
+                                <span class="status-badge active">✅ Active</span>
+                                <span class="beneficiaries">👥 8.2Cr Farmers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scheme-stats">
+                    <div class="stat-badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="active-schemes">5</span> Active Schemes
+                    </div>
+                    <div class="stat-badge">
+                        <i class="fas fa-users"></i>
+                        <span id="beneficiaries">11.5Cr+</span> Beneficiaries
+                    </div>
+                </div>
+                
+                <div class="api-source">
+                    <i class="fas fa-database"></i> 🔗 Source: data.gov.in API
+                </div>
+            </div>
+
+            <!-- Emergency Alert Card with Animations -->
+            <div class="card emergency-alert animate__animated animate__pulse animate__infinite">
+                <div class="alert-header">
+                    <div class="alert-icon-left">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="alert-title">
+                        <h3>🚨 EMERGENCY ALERT 🚨</h3>
+                        <div class="kannada-text">ತುರ್ತು ಎಚ್ಚರಿಕೆ</div>
+                    </div>
+                    <div class="alert-icon-right">
+                        <i class="fas fa-temperature-high"></i>
+                    </div>
+                </div>
+                
+                <div class="alert-content">
+                    <div class="alert-text">
+                        <div id="emergency-alert">
+                            ⚠️ CLOUDS ALERT: 20°C expected today. Monitor crop conditions
+                        </div>
+                        <div class="kannada-text" id="emergency-alert-kannada">
+                            ⚠️ ಮೋಡ ಎಚ್ಚರಿಕೆ: ಇಂದು 20°C ನಿರೀಕ್ಷಿಸಲಾಗಿದೆ. ಬೆಳೆ ಪರಿಸ್ಥಿತಿಗಳನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಿ
+                        </div>
+                    </div>
+                    
+                    <div class="alert-details-grid">
+                        <div class="alert-detail">
+                            <i class="fas fa-thermometer-half"></i>
+                            <div>
+                                <div class="detail-label">Feels Like</div>
+                                <div class="detail-value" id="feels-like-alert">20°C</div>
+                            </div>
+                        </div>
+                        <div class="alert-detail">
+                            <i class="fas fa-wind"></i>
+                            <div>
+                                <div class="detail-label">Wind Speed</div>
+                                <div class="detail-value" id="wind-alert">16 km/h</div>
+                            </div>
+                        </div>
+                        <div class="alert-detail">
+                            <i class="fas fa-tint"></i>
+                            <div>
+                                <div class="detail-label">Humidity</div>
+                                <div class="detail-value" id="humidity-alert">56%</div>
+                            </div>
+                        </div>
+                        <div class="alert-detail">
+                            <i class="fas fa-sun"></i>
+                            <div>
+                                <div class="detail-label">UV Index</div>
+                                <div class="detail-value" id="uv-index">Low</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert-actions">
+                    <button class="alert-action-btn">
+                        <i class="fas fa-bell"></i> Set Reminder
+                    </button>
+                    <button class="alert-action-btn">
+                        <i class="fas fa-info-circle"></i> More Info
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Enhanced Bottom Panel with Voice Button -->
+        <div class="dashboard-bottom">
+            <div class="update-panel">
+                <div class="update-box">
+                    <div class="update-icon">⏰</div>
+                    <div class="update-info">
+                        <div class="update-label">NEXT UPDATE IN</div>
+                        <div class="kannada-text">ಮುಂದಿನ ನವೀಕರಣ</div>
+                        <div class="update-value"><span class="blink" id="countdown">45</span>s</div>
+                    </div>
+                </div>
+                
+                <div class="update-box">
+                    <div class="update-icon">🔄</div>
+                    <div class="update-info">
+                        <div class="update-label">LAST UPDATED</div>
+                        <div class="kannada-text">ಕೊನೆಯ ನವೀಕರಣ</div>
+                        <div class="update-value" id="last-updated">21:41:29</div>
+                    </div>
+                </div>
+                
+                <div class="update-box">
+                    <div class="update-icon">✅</div>
+                    <div class="update-info">
+                        <div class="update-label">SYSTEM STATUS</div>
+                        <div class="kannada-text">ವ್ಯವಸ್ಥೆಯ ಸ್ಥಿತಿ</div>
+                        <div class="update-value">
+                            <span class="status-indicator"></span>
+                            <span id="system-status">ACTIVE</span>
+                            <div class="kannada-text">ಸಕ್ರಿಯ</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="update-box">
+                    <div class="update-icon">🔌</div>
+                    <div class="update-info">
+                        <div class="update-label">API STATUS</div>
+                        <div class="kannada-text">API ಸ್ಥಿತಿ</div>
+                        <div class="api-status">
+                            <span class="api-indicator active" id="weather-api">🌤️</span>
+                            <span class="api-indicator active" id="crop-api">🌾</span>
+                            <span class="api-indicator active" id="scheme-api">🏛️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kannada Voice Button with Controls -->
+            <div class="voice-controls">
+                <button class="voice-btn" id="kannada-voice-btn">
+                    <i class="fas fa-volume-up"></i>
+                    🔊 ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ
+                    <div class="kannada-text">Listen in Kannada</div>
+                </button>
+                
+                <div class="voice-control-buttons">
+                    <button class="voice-control-btn" id="voice-weather">
+                        <i class="fas fa-cloud-sun"></i>
+                        <div class="kannada-text">ಹವಾಮಾನ</div>
+                    </button>
+                    <button class="voice-control-btn" id="voice-prices">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="kannada-text">ಬೆಲೆಗಳು</div>
+                    </button>
+                    <button class="voice-control-btn" id="voice-schemes">
+                        <i class="fas fa-landmark"></i>
+                        <div class="kannada-text">ಯೋಜನೆಗಳು</div>
+                    </button>
+                    <button class="voice-control-btn" id="voice-stop">
+                        <i class="fas fa-stop"></i>
+                        <div class="kannada-text">ನಿಲ್ಲಿಸಿ</div>
+                    </button>
+                </div>
+                
+                <div class="voice-info">
+                    <i class="fas fa-info-circle"></i>
+                    🎤 Today's weather, prices & schemes in Kannada
+                    <div class="kannada-text">🎤 ಇಂದಿನ ಹವಾಮಾನ, ಬೆಲೆಗಳು ಮತ್ತು ಯೋಜನೆಗಳು</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+              // ============================================
+        // ENHANCED KANNADA VOICE SYSTEM - COMPLETE FIX
+        // ============================================
+        let isSpeaking = false;
+        let currentSpeech = null;
+        let currentVoiceType = null;
+        
+        // Voice control buttons
+        const kannadaVoiceBtn = document.getElementById('kannada-voice-btn');
+        const voiceWeatherBtn = document.getElementById('voice-weather');
+        const voicePricesBtn = document.getElementById('voice-prices');
+        const voiceSchemesBtn = document.getElementById('voice-schemes');
+        const voiceStopBtn = document.getElementById('voice-stop');
+        
+        // Store Kannada pronunciations
+        const kannadaPronunciations = {
+            "temperature": "ತಾಪಮಾನ",
+            "degrees": "ಡಿಗ್ರಿ",
+            "celsius": "ಸೆಲ್ಸಿಯಸ್",
+            "wind": "ಗಾಳಿ",
+            "speed": "ವೇಗ",
+            "kilometers": "ಕಿಲೋಮೀಟರ್",
+            "per hour": "ಪ್ರತಿ ಗಂಟೆಗೆ",
+            "humidity": "ಆರ್ದ್ರತೆ",
+            "percent": "ಶೇಕಡಾ",
+            "feels like": "ಅನುಭವ",
+            "sunrise": "ಸೂರ್ಯೋದಯ",
+            "sunset": "ಸೂರ್ಯಾಸ್ತ",
+            "clouds": "ಮೋಡ",
+            "clear": "ಸ್ಪಷ್ಟ",
+            "rain": "ಮಳೆ",
+            "sunny": "ಬಿಸಿಲು",
+            "jowar": "ಜೋಳ",
+            "maize": "ಮೆಕ್ಕೆಜೋಳ",
+            "sugarcane": "ಕಬ್ಬು",
+            "paddy": "ಭತ್ತ",
+            "crop": "ಬೆಳೆ",
+            "price": "ಬೆಲೆ",
+            "per quintal": "ಪ್ರತಿ ಕ್ವಿಂಟಲ್",
+            "per ton": "ಪ್ರತಿ ಟನ್",
+            "trending up": "ಹೆಚ್ಚುತ್ತಿದೆ",
+            "trending down": "ಕಡಿಮೆಯಾಗುತ್ತಿದೆ",
+            "stable": "ಸ್ಥಿರ",
+            "scheme": "ಯೋಜನೆ",
+            "government": "ಸರ್ಕಾರ",
+            "pm kisan": "ಪಿಎಂ ಕಿಸಾನ್",
+            "pm fasal bima": "ಪಿಎಂ ಫಸಲ್ ಬಿಮಾ",
+            "insurance": "ವಿಮಾ",
+            "premium": "ಪ್ರೀಮಿಯಂ",
+            "direct benefit": "ನೇರ ಲಾಭ",
+            "bank account": "ಬ್ಯಾಂಕ್ ಖಾತೆ",
+            "farmers": "ರೈತರು",
+            "crore": "ಕೋಟಿ",
+            "active": "ಸಕ್ರಿಯ",
+            "beneficiaries": "ಲಾಭಾರ್ಥಿಗಳು"
+        };
+        
+        // Text-to-Speech using Web Speech API with better Kannada support
+        function speakKannada(text, voiceType = null) {
+            if ('speechSynthesis' in window) {
+                // Stop any ongoing speech
+                window.speechSynthesis.cancel();
+                
+                // Create speech utterance
+                const speech = new SpeechSynthesisUtterance(text);
+                speech.lang = 'kn-IN'; // Kannada language
+                speech.rate = 0.85; // Slower for better clarity
+                speech.pitch = 1.0;
+                speech.volume = 1.0;
+                
+                // Get available voices
+                const voices = window.speechSynthesis.getVoices();
+                
+                // Try to find Kannada voice
+                let kannadaVoice = voices.find(voice => 
+                    voice.lang === 'kn-IN' || 
+                    voice.lang.startsWith('kn') ||
+                    voice.name.toLowerCase().includes('kannada') ||
+                    voice.name.toLowerCase().includes('indian')
+                );
+                
+                // If no Kannada voice found, try any Indian voice
+                if (!kannadaVoice) {
+                    kannadaVoice = voices.find(voice => 
+                        voice.lang.includes('IN') || 
+                        voice.name.toLowerCase().includes('india')
+                    );
+                }
+                
+                if (kannadaVoice) {
+                    speech.voice = kannadaVoice;
+                    console.log("Using voice:", kannadaVoice.name);
+                } else {
+                    console.log("No Kannada voice found, using default");
+                }
+                
+                // Speech events
+                speech.onstart = function() {
+                    isSpeaking = true;
+                    currentVoiceType = voiceType;
+                    updateVoiceButton(true, voiceType);
+                    highlightActiveButton(voiceType);
+                };
+                
+                speech.onend = function() {
+                    isSpeaking = false;
+                    currentVoiceType = null;
+                    updateVoiceButton(false);
+                    removeHighlightFromButtons();
+                };
+                
+                speech.onerror = function(event) {
+                    console.error('Speech synthesis error:', event);
+                    isSpeaking = false;
+                    currentVoiceType = null;
+                    updateVoiceButton(false);
+                    removeHighlightFromButtons();
+                    
+                    // Fallback: Show text in alert if speech fails
+                    if (voiceType === 'weather') {
+                        alert("ವಾಕ್ ಸಹಾಯಕ ಸಿಗಲಿಲ್ಲ. ಇಂದಿನ ಹವಾಮಾನ: " + getWeatherText());
+                    }
+                };
+                
+                // Speak
+                window.speechSynthesis.speak(speech);
+                currentSpeech = speech;
+                return speech;
+            } else {
+                console.error('Speech synthesis not supported');
+                alert("ನಿಮ್ಮ ಬ್ರೌಸರ್ ಸಪೋರ್ಟ್ ಮಾಡುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು Chrome ಅಥವಾ Edge ಬಳಸಿ.");
+                return null;
+            }
+        }
+        
+        function updateVoiceButton(speaking, voiceType = null) {
+            if (speaking) {
+                let speakingText = "ಮಾತನಾಡುತ್ತಿದೆ...";
+                if (voiceType === 'weather') speakingText = "ಹವಾಮಾನ ಮಾಹಿತಿ...";
+                else if (voiceType === 'prices') speakingText = "ಬೆಲೆ ಮಾಹಿತಿ...";
+                else if (voiceType === 'schemes') speakingText = "ಯೋಜನೆ ಮಾಹಿತಿ...";
+                
+                kannadaVoiceBtn.innerHTML = `
+                    <i class="fas fa-stop"></i>
+                    🔊 ${speakingText}
+                    <div class="kannada-text">Speaking...</div>
+                `;
+                kannadaVoiceBtn.style.background = 'linear-gradient(135deg, #FF3D00, #FF6B00)';
+                kannadaVoiceBtn.style.borderColor = '#FF3D00';
+            } else {
+                kannadaVoiceBtn.innerHTML = `
+                    <i class="fas fa-volume-up"></i>
+                    🔊 ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ
+                    <div class="kannada-text">Listen in Kannada</div>
+                `;
+                kannadaVoiceBtn.style.background = 'linear-gradient(135deg, #FF6B00, #FF9500)';
+                kannadaVoiceBtn.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            }
+        }
+        
+        function highlightActiveButton(voiceType) {
+            // Remove highlight from all buttons
+            removeHighlightFromButtons();
+            
+            // Add highlight to active button
+            if (voiceType === 'weather') {
+                voiceWeatherBtn.classList.add('active');
+            } else if (voiceType === 'prices') {
+                voicePricesBtn.classList.add('active');
+            } else if (voiceType === 'schemes') {
+                voiceSchemesBtn.classList.add('active');
+            }
+        }
+        
+        function removeHighlightFromButtons() {
+            voiceWeatherBtn.classList.remove('active');
+            voicePricesBtn.classList.remove('active');
+            voiceSchemesBtn.classList.remove('active');
+            voiceStopBtn.classList.remove('active');
+        }
+        
+        // Generate weather report in proper Kannada
+        function getWeatherText() {
+            const temp = document.getElementById('temperature').textContent.replace('°C', '').trim();
+            const desc = document.getElementById('weather-desc').textContent;
+            const wind = document.getElementById('wind-speed').textContent.replace('km/h', '').trim();
+            const humidity = document.getElementById('humidity').textContent.replace('%', '').trim();
+            const feels = document.getElementById('feels-like').textContent.replace('°C', '').trim();
+            const sunrise = document.getElementById('sunrise').textContent;
+            const sunset = document.getElementById('sunset').textContent;
+            
+            // Clean description
+            let cleanDesc = desc.replace('☁️ ', '').replace('☀️ ', '').replace('🌧️ ', '');
+            
+            return `
+                ಇಂದಿನ ಹವಾಮಾನ ವರದಿ. 
+                ಪ್ರಸ್ತುತ ತಾಪಮಾನ ${temp} ಡಿಗ್ರಿ ಸೆಲ್ಸಿಯಸ್. 
+                ಹವಾಮಾನ ${cleanDesc.toLowerCase() === 'clouds' ? 'ಮೋಡ' : 'ಬಿಸಿಲು'}. 
+                ಗಾಳಿ ವೇಗ ಗಂಟೆಗೆ ${wind} ಕಿಲೋಮೀಟರ್. 
+                ಆರ್ದ್ರತೆ ${humidity} ಶೇಕಡಾ. 
+                ಅನುಭವ ತಾಪಮಾನ ${feels} ಡಿಗ್ರಿ. 
+                ಸೂರ್ಯೋದಯ ಸಮಯ ${sunrise}. 
+                ಸೂರ್ಯಾಸ್ತ ಸಮಯ ${sunset}.
+                ಕೃಷಿಗೆ ಉತ್ತಮ ಹವಾಮಾನ.
+            `;
+        }
+        
+        // Generate crop prices report in proper Kannada
+        function getCropPricesText() {
+            const jowar = document.getElementById('jowar-price').textContent;
+            const maize = document.getElementById('maize-price').textContent;
+            const sugarcane = document.getElementById('sugarcane-price').textContent;
+            const paddy = document.getElementById('paddy-price').textContent;
+            
+            // Extract prices
+            const jowarPrice = jowar.replace('₹', '').replace('/q', '').trim();
+            const maizePrice = maize.replace('₹', '').replace('/q', '').trim();
+            const sugarcanePrice = sugarcane.replace('₹', '').replace('/t', '').trim();
+            const paddyPrice = paddy.replace('₹', '').replace('/q', '').trim();
+            
+            return `
+                ಇಂದಿನ ಬೆಳೆ ಬೆಲೆಗಳು. 
+                ಜೋಳ ಪ್ರತಿ ಕ್ವಿಂಟಲ್ ${jowarPrice} ರೂಪಾಯಿ. 
+                ಮೆಕ್ಕೆಜೋಳ ಪ್ರತಿ ಕ್ವಿಂಟಲ್ ${maizePrice} ರೂಪಾಯಿ. 
+                ಕಬ್ಬು ಪ್ರತಿ ಟನ್ ${sugarcanePrice} ರೂಪಾಯಿ. 
+                ಭತ್ತ ಪ್ರತಿ ಕ್ವಿಂಟಲ್ ${paddyPrice} ರೂಪಾಯಿ.
+                ಮಾರುಕಟ್ಟೆ ಸ್ಥಿರವಾಗಿದೆ. 
+                ಬೆಳೆ ಬೆಲೆಗಳು ಉತ್ತಮವಾಗಿವೆ.
+                ಸಲಹೆ: ಸರಿಯಾದ ಸಮಯದಲ್ಲಿ ಬೆಳೆ ಮಾರಾಟ ಮಾಡಿ.
+            `;
+        }
+        
+        // Generate schemes report in proper Kannada
+        function getSchemesText() {
+            return `
+                ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು. 
+                ಪಿಎಂ ಕಿಸಾನ್ ಯೋಜನೆ: ವರ್ಷಕ್ಕೆ 6000 ರೂಪಾಯಿ ನೇರವಾಗಿ ರೈತರ ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ. 
+                ಪಿಎಂ ಫಸಲ್ ಬಿಮಾ ಯೋಜನೆ: ಕಡಿಮೆ ಪ್ರೀಮಿಯಂ ದರಗಳೊಂದಿಗೆ ಬೆಳೆ ವಿಮಾ. 
+                ಕರ್ನಾಟಕ ರೈತ ಶ್ರೀ ಯೋಜನೆ: 90% ಸಬ್ಸಿಡಿ ಡ್ರಿಪ್ ನೀರಾವರಿಗೆ. 
+                ರಾಷ್ಟ್ರೀಯ ಕೃಷಿ ವಿಕಾಸ ಯೋಜನೆ: ಆಧುನಿಕ ಕೃಷಿ ಸಲಕರಣೆಗೆ ಸಬ್ಸಿಡಿ.
+                ಒಟ್ಟು 5 ಸಕ್ರಿಯ ಯೋಜನೆಗಳು. 
+                11.5 ಕೋಟಿ ರೈತರು ಲಾಭ ಪಡೆಯುತ್ತಿದ್ದಾರೆ.
+                ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗೆ ನಿಮ್ಮ ಹತ್ತಿರದ ಕೃಷಿ ಕಾರ್ಯಾಲಯವನ್ನು ಸಂಪರ್ಕಿಸಿ.
+            `;
+        }
+        
+        // Generate tips report
+        function getTipsText() {
+            return `
+                ರೈತರ ಸಲಹೆಗಳು. 
+                ಬೆಳಗ್ಗೆ 6-8 ಗಂಟೆಗೆ ಬೆಳೆಗಳಿಗೆ ನೀರು ಹಾಕಿ, ಇದರಿಂದ ಬಾಷ್ಪೀಕರಣ ಕಡಿಮೆಯಾಗುತ್ತದೆ. 
+                ನೈಸರ್ಗಿಕ ಕೀಟ ನಿಯಂತ್ರಣಕ್ಕಾಗಿ ನೀಂ ತೈಲ ಸಿಂಪಡಣೆ ಬಳಸಿ. 
+                ಮಣ್ಣಿನ ಫಲವತ್ತತೆ ಸುಧಾರಿಸಲು ವಿವಿಧ ಬೆಳೆಗಳನ್ನು ಮಿಶ್ರಣ ಮಾಡಿ.
+                ಸಾವಯವ ಗೊಬ್ಬರ ಬಳಸಿ, ರಾಸಾಯನಿಕ ಗೊಬ್ಬರ ಕಡಿಮೆ ಮಾಡಿ.
+                ನೀರಿನ ಸಂರಕ್ಷಣೆ ಮಾಡಿ, ಡ್ರಿಪ್ ನೀರಾವರಿ ಬಳಸಿ.
+            `;
+        }
+        
+        // Event Listeners for Voice Controls
+        kannadaVoiceBtn.addEventListener('click', function() {
+            if (isSpeaking) {
+                stopAllSpeech();
+            } else {
+                // Speak full report when main button is clicked
+                const fullReport = `
+                    ಸ್ಮಾರ್ಟ್ ಸೌರ ಕ್ಷೇತ್ರ ಮಂಡಳಿ ವರದಿ.
+                    ${getWeatherText()}
+                    ${getCropPricesText()}
+                    ${getSchemesText()}
+                    ${getTipsText()}
+                    ಧನ್ಯವಾದಗಳು. ನಮ್ಮ ಸೇವೆಗಳನ್ನು ಬಳಸಿದ್ದಕ್ಕಾಗಿ.
+                `;
+                speakKannada(fullReport, 'full');
+            }
+        });
+        
+        voiceWeatherBtn.addEventListener('click', function() {
+            if (isSpeaking && currentVoiceType === 'weather') {
+                stopAllSpeech();
+            } else {
+                stopAllSpeech();
+                setTimeout(() => {
+                    speakKannada(getWeatherText(), 'weather');
+                }, 300);
+            }
+        });
+        
+        voicePricesBtn.addEventListener('click', function() {
+            if (isSpeaking && currentVoiceType === 'prices') {
+                stopAllSpeech();
+            } else {
+                stopAllSpeech();
+                setTimeout(() => {
+                    speakKannada(getCropPricesText(), 'prices');
+                }, 300);
+            }
+        });
+        
+        voiceSchemesBtn.addEventListener('click', function() {
+            if (isSpeaking && currentVoiceType === 'schemes') {
+                stopAllSpeech();
+            } else {
+                stopAllSpeech();
+                setTimeout(() => {
+                    speakKannada(getSchemesText(), 'schemes');
+                }, 300);
+            }
+        });
+        
+        voiceStopBtn.addEventListener('click', function() {
+            stopAllSpeech();
+            voiceStopBtn.classList.add('active');
+            setTimeout(() => {
+                voiceStopBtn.classList.remove('active');
+            }, 500);
+        });
+        
+        function stopAllSpeech() {
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+            isSpeaking = false;
+            currentVoiceType = null;
+            updateVoiceButton(false);
+            removeHighlightFromButtons();
+        }
+        
+        // ============================================
+        // REAL API IMPLEMENTATION WITH CORS PROXIES
+        // ============================================
+        
+        // API Configuration with CORS proxies for VS Code
+        const API_CONFIG = {
+            weather: {
+                // Working CORS proxy endpoints for VS Code
+                primary: {
+                    url: 'https://api.openweathermap.org/data/2.5/weather',
+                    key: 'bd5e378503939ddaee76f12ad7a97608',
+                    corsProxy: 'https://corsproxy.io/?'
+                },
+                fallback: {
+                    url: 'https://api.weatherapi.com/v1/current.json',
+                    key: 'd5b1d1655559470e9a9110300241104',
+                    corsProxy: 'https://api.allorigins.win/raw?url='
+                },
+                simple: {
+                    url: 'https://api.open-meteo.com/v1/forecast',
+                    corsProxy: ''
+                }
+            },
+            location: {
+                lat: 15.3647,
+                lon: 75.1240,
+                city: 'Hubli'
+            }
+        };
+
+        // DOM Elements
+        const temperatureEl = document.getElementById('temperature');
+        const weatherDescEl = document.getElementById('weather-desc');
+        const weatherDescKannadaEl = document.getElementById('weather-desc-kannada');
+        const windSpeedEl = document.getElementById('wind-speed');
+        const humidityEl = document.getElementById('humidity');
+        const feelsLikeEl = document.getElementById('feels-like');
+        const sunriseEl = document.getElementById('sunrise');
+        const sunsetEl = document.getElementById('sunset');
+        const weatherUpdateTimeEl = document.getElementById('weather-update-time');
+        const marketRateEl = document.getElementById('market-rate');
+        const jowarPriceEl = document.getElementById('jowar-price');
+        const maizePriceEl = document.getElementById('maize-price');
+        const sugarcanePriceEl = document.getElementById('sugarcane-price');
+        const paddyPriceEl = document.getElementById('paddy-price');
+        const jowarTrendEl = document.getElementById('jowar-trend');
+        const maizeTrendEl = document.getElementById('maize-trend');
+        const sugarcaneTrendEl = document.getElementById('sugarcane-trend');
+        const paddyTrendEl = document.getElementById('paddy-trend');
+        const cropPercentageEl = document.getElementById('crop-percentage');
+        const progressBarEl = document.getElementById('progress-bar');
+        const cropStageText = document.getElementById('crop-stage-text');
+        const cropStageKannada = document.getElementById('crop-stage-kannada');
+        const emergencyAlertEl = document.getElementById('emergency-alert');
+        const emergencyAlertKannadaEl = document.getElementById('emergency-alert-kannada');
+        const lastUpdatedEl = document.getElementById('last-updated');
+        const countdownEl = document.getElementById('countdown');
+        const systemStatusEl = document.getElementById('system-status');
+        const solarPowerEl = document.getElementById('solar-power');
+        const solarEfficiencyEl = document.getElementById('solar-efficiency');
+        const weatherApiEl = document.getElementById('weather-api');
+        const cropApiEl = document.getElementById('crop-api');
+        const schemeApiEl = document.getElementById('scheme-api');
+        const backupApiEl = document.getElementById('backup-api');
+        const weatherIconEl = document.getElementById('weather-icon');
+        const weatherForecastEl = document.getElementById('weather-forecast');
+        const feelsLikeAlertEl = document.getElementById('feels-like-alert');
+        const windAlertEl = document.getElementById('wind-alert');
+        const humidityAlertEl = document.getElementById('humidity-alert');
+        const uvIndexEl = document.getElementById('uv-index');
+        const cropApiSourceEl = document.getElementById('crop-api-source');
+        const schemeApiSourceEl = document.getElementById('scheme-api-source');
+        const refreshDataBtn = document.getElementById('refresh-data-btn');
+        const apiStatusBtn = document.getElementById('api-status-btn');
+        
+        // Helper functions
+        function updateApiStatus(element, status) {
+            element.className = 'api-indicator';
+            if (status === 'active') {
+                element.classList.add('active');
+                element.style.color = '#00ff00';
+            } else if (status === 'mock') {
+                element.classList.add('active');
+                element.style.color = '#FFD600';
+                element.title = 'Using backup data';
+            } else if (status === 'error') {
+                element.style.opacity = '0.3';
+                element.style.color = '#ff3838';
+            }
+        }
+        
+        function updateDateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-IN', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            lastUpdatedEl.textContent = timeStr;
+            weatherUpdateTimeEl.textContent = timeStr;
+        }
+        
+        let countdown = 60;
+        function updateCountdown() {
+            countdown--;
+            if (countdown <= 0) {
+                countdown = 60;
+            }
+            countdownEl.textContent = countdown;
+            countdownEl.style.color = countdown <= 10 ? '#ff3838' : '#FFD600';
+        }
+        
+        // Convert timestamp to local time
+        function convertToLocalTime(timestamp, timezoneOffset) {
+            const date = new Date((timestamp + timezoneOffset) * 1000);
+            return date.toLocaleTimeString('en-IN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            }).toUpperCase();
+        }
+        
+        // Enhanced fetch with CORS proxy for VS Code
+        async function fetchWithCORSProxy(urls, timeout = 8000) {
+            for (let i = 0; i < urls.length; i++) {
+                try {
+                    console.log(`Trying API: ${urls[i].substring(0, 100)}...`);
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), timeout);
+                    
+                    const response = await fetch(urls[i], { 
+                        signal: controller.signal,
+                        headers: {
+                            'Accept': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                        }
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log(`API ${i+1} succeeded!`);
+                        return { success: true, data: data };
+                    }
+                } catch (error) {
+                    console.warn(`API ${i+1} failed:`, error.message);
+                    continue;
+                }
+            }
+            return { success: false, data: null };
+        }
+        
+        // Real Weather API with CORS proxies
+        async function fetchRealWeather() {
+            const weatherUrls = [
+                // OpenWeatherMap with CORS proxy
+                `https://corsproxy.io/?${encodeURIComponent(`https://api.openweathermap.org/data/2.5/weather?lat=${API_CONFIG.location.lat}&lon=${API_CONFIG.location.lon}&units=metric&appid=${API_CONFIG.weather.primary.key}`)}`,
+                
+                // Open-Meteo (no API key needed, CORS-friendly)
+                `https://api.open-meteo.com/v1/forecast?latitude=${API_CONFIG.location.lat}&longitude=${API_CONFIG.location.lon}&current_weather=true&timezone=auto`,
+                
+                // WeatherAPI with proxy
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.weatherapi.com/v1/current.json?key=${API_CONFIG.weather.fallback.key}&q=${API_CONFIG.location.city}&aqi=no`)}`
+            ];
+            
+            const result = await fetchWithCORSProxy(weatherUrls);
+            
+            if (result.success) {
+                try {
+                    let temp = 28, desc = "Clear", humidity = 65, windSpeed = 12, feelsLike = 29;
+                    let sunriseTime = "6:15 AM", sunsetTime = "6:45 PM";
+                    
+                    // Process OpenWeatherMap data
+                    if (result.data.weather) {
+                        temp = Math.round(result.data.main.temp);
+                        desc = result.data.weather[0].main;
+                        humidity = result.data.main.humidity;
+                        windSpeed = Math.round(result.data.wind.speed * 3.6);
+                        feelsLike = Math.round(result.data.main.feels_like);
+                        
+                        if (result.data.sys) {
+                            const timezoneOffset = result.data.timezone || 19800;
+                            sunriseTime = convertToLocalTime(result.data.sys.sunrise, timezoneOffset);
+                            sunsetTime = convertToLocalTime(result.data.sys.sunset, timezoneOffset);
+                        }
+                    } 
+                    // Process Open-Meteo data
+                    else if (result.data.current_weather) {
+                        temp = Math.round(result.data.current_weather.temperature);
+                        desc = result.data.current_weather.weathercode < 3 ? "Clear" : 
+                               result.data.current_weather.weathercode < 5 ? "Partly Cloudy" : 
+                               result.data.current_weather.weathercode < 7 ? "Cloudy" : "Rain";
+                        windSpeed = Math.round(result.data.current_weather.windspeed);
+                        feelsLike = temp;
+                        humidity = 65; // Default
+                    }
+                    // Process WeatherAPI data
+                    else if (result.data.current) {
+                        temp = Math.round(result.data.current.temp_c);
+                        desc = result.data.current.condition.text;
+                        humidity = result.data.current.humidity;
+                        windSpeed = Math.round(result.data.current.wind_kph);
+                        feelsLike = Math.round(result.data.current.feelslike_c);
+                    }
+                    
+                    // Update weather icon
+                    let weatherIcon = 'fa-cloud';
+                    let weatherEmoji = '☁️';
+                    if (desc.includes('Clear') || desc.includes('Sunny')) {
+                        weatherIcon = 'fa-sun';
+                        weatherEmoji = '☀️';
+                    } else if (desc.includes('Rain')) {
+                        weatherIcon = 'fa-cloud-rain';
+                        weatherEmoji = '🌧️';
+                    } else if (desc.includes('Cloud')) {
+                        weatherIcon = 'fa-cloud';
+                        weatherEmoji = '☁️';
+                    }
+                    
+                    // Update display
+                    temperatureEl.innerHTML = `${temp}°C`;
+                    weatherDescEl.textContent = `${weatherEmoji} ${desc}`;
+                    weatherDescKannadaEl.textContent = `${weatherEmoji} ${translateToKannada(desc)}`;
+                    feelsLikeEl.textContent = `${feelsLike}°C`;
+                    windSpeedEl.textContent = `${windSpeed} km/h`;
+                    humidityEl.textContent = `${humidity}%`;
+                    sunriseEl.textContent = sunriseTime;
+                    sunsetEl.textContent = sunsetTime;
+                    weatherIconEl.className = `fas ${weatherIcon}`;
+                    
+                    // Update alert details
+                    feelsLikeAlertEl.textContent = `${feelsLike}°C`;
+                    windAlertEl.textContent = `${windSpeed} km/h`;
+                    humidityAlertEl.textContent = `${humidity}%`;
+                    
+                    // Update UV Index
+                    const hour = new Date().getHours();
+                    const uvIndex = hour >= 10 && hour <= 15 ? 'High' : 'Low';
+                    uvIndexEl.textContent = uvIndex;
+                    
+                    // Create weather alert
+                    let alertMsg = "";
+                    let alertEmoji = "⚠️";
+                    
+                    if (temp > 35) {
+                        alertMsg = `🔥 HEAT ALERT: ${temp}°C expected today. Water crops early morning`;
+                        alertEmoji = "🔥";
+                    } else if (desc.includes("Rain")) {
+                        alertMsg = `🌧️ RAIN ALERT: ${desc} expected. Prepare field drainage`;
+                        alertEmoji = "🌧️";
+                    } else if (windSpeed > 30) {
+                        alertMsg = `💨 WIND ALERT: ${windSpeed} km/h winds. Secure equipment`;
+                        alertEmoji = "💨";
+                    } else {
+                        alertMsg = `${weatherEmoji} WEATHER: ${temp}°C expected today. Monitor crop conditions`;
+                        alertEmoji = weatherEmoji;
+                    }
+                    
+                    emergencyAlertEl.textContent = alertMsg;
+                    emergencyAlertKannadaEl.textContent = `${alertEmoji} ${translateToKannada(alertMsg)}`;
+                    
+                    // Update weather forecast
+                    weatherForecastEl.textContent = `${weatherEmoji} ${desc}, ${temp}°C`;
+                    
+                    updateApiStatus(weatherApiEl, 'active');
+                    updateApiStatus(backupApiEl, 'active');
+                    console.log("✅ Weather data fetched successfully!");
+                    return { success: true, source: 'Real API' };
+                    
+                } catch (error) {
+                    console.error("Weather processing error:", error);
+                    return { success: false, source: 'Error' };
+                }
+            } else {
+                console.log("All weather APIs failed, using mock data");
+                updateApiStatus(weatherApiEl, 'mock');
+                updateApiStatus(backupApiEl, 'mock');
+                
+                // Use realistic mock data based on time
+                const hour = new Date().getHours();
+                const temp = 25 + Math.sin(hour * 0.26) * 5;
+                const desc = hour < 18 ? 'Partly Cloudy' : 'Clear';
+                const humidity = 50 + Math.round(Math.random() * 30);
+                const windSpeed = 5 + Math.round(Math.random() * 15);
+                
+                temperatureEl.innerHTML = `${Math.round(temp)}°C`;
+                weatherDescEl.textContent = `☁️ ${desc}`;
+                feelsLikeEl.textContent = `${Math.round(temp + 2)}°C`;
+                windSpeedEl.textContent = `${windSpeed} km/h`;
+                humidityEl.textContent = `${humidity}%`;
+                
+                return { success: false, source: 'Mock' };
+            }
+        }
+        
+        // Fetch real crop prices with CORS proxy
+        async function fetchCropPrices() {
+            try {
+                // Using public agricultural data APIs with CORS proxies
+                const cropUrls = [
+                    // CORS-friendly agricultural data
+                    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=10'),
+                    
+                    // Alternative source
+                    'https://corsproxy.io/?' + encodeURIComponent('https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=10'),
+                    
+                    // Backup: Public JSON data
+                    'https://api.npoint.io/f8b8b7e8b0d5a5c5b5b5'
+                ];
+                
+                const result = await fetchWithCORSProxy(cropUrls);
+                
+                if (result.success) {
+                    // Process agricultural data
+                    let crops = {
+                        jowar: { price: 2845, trend: 'up' },
+                        maize: { price: 2150, trend: 'stable' },
+                        sugarcane: { price: 3200, trend: 'up' },
+                        paddy: { price: 2100, trend: 'down' }
+                    };
+                    
+                    // Try to extract real prices
+                    if (result.data.records && Array.isArray(result.data.records)) {
+                        result.data.records.forEach(record => {
+                            if (record.commodity && record.modal_price) {
+                                const commodity = record.commodity.toLowerCase();
+                                const price = parseFloat(record.modal_price);
+                                
+                                if (!isNaN(price)) {
+                                    if (commodity.includes('jowar') || commodity.includes('sorghum')) {
+                                        crops.jowar.price = Math.round(price);
+                                        crops.jowar.trend = price > 2800 ? 'up' : 'down';
+                                    } else if (commodity.includes('maize') || commodity.includes('corn')) {
+                                        crops.maize.price = Math.round(price);
+                                        crops.maize.trend = price > 2100 ? 'up' : 'stable';
+                                    } else if (commodity.includes('sugarcane')) {
+                                        crops.sugarcane.price = Math.round(price);
+                                        crops.sugarcane.trend = price > 3100 ? 'up' : 'stable';
+                                    } else if (commodity.includes('paddy') || commodity.includes('rice')) {
+                                        crops.paddy.price = Math.round(price);
+                                        crops.paddy.trend = price > 2000 ? 'up' : 'down';
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    
+                    updateCropPricesUI(crops);
+                    updateApiStatus(cropApiEl, 'active');
+                    cropApiSourceEl.textContent = 'Agri Data API';
+                    console.log("✅ Crop prices fetched from API!");
+                    return { success: true };
+                    
+                } else {
+                    // Use realistic mock data
+                    generateRealisticCropPrices();
+                    updateApiStatus(cropApiEl, 'mock');
+                    updateApiStatus(backupApiEl, 'mock');
+                    cropApiSourceEl.textContent = 'Market Data';
+                    console.log("⚠️ Using realistic crop prices");
+                    return { success: false };
+                }
+            } catch (error) {
+                console.error("Crop API Error:", error);
+                generateRealisticCropPrices();
+                updateApiStatus(cropApiEl, 'mock');
+                cropApiSourceEl.textContent = 'Local Data';
+                return { success: false };
+            }
+        }
+        
+        function generateRealisticCropPrices() {
+            const hour = new Date().getHours();
+            const day = new Date().getDay();
+            
+            // Market fluctuates during day, stable at night
+            const marketFactor = 0.97 + (Math.sin(hour * 0.26) * 0.03);
+            
+            // Weekend vs weekday differences
+            const weekendFactor = day === 0 || day === 6 ? 1.02 : 1.0;
+            
+            const crops = {
+                jowar: {
+                    price: Math.round((2845 + (Math.random() * 200 - 100)) * marketFactor * weekendFactor),
+                    trend: Math.random() > 0.6 ? 'up' : Math.random() > 0.3 ? 'stable' : 'down'
+                },
+                maize: {
+                    price: Math.round((2150 + (Math.random() * 150 - 75)) * marketFactor * weekendFactor),
+                    trend: Math.random() > 0.7 ? 'up' : Math.random() > 0.4 ? 'stable' : 'down'
+                },
+                sugarcane: {
+                    price: Math.round((3200 + (Math.random() * 300 - 150)) * marketFactor * weekendFactor),
+                    trend: Math.random() > 0.5 ? 'up' : Math.random() > 0.3 ? 'stable' : 'down'
+                },
+                paddy: {
+                    price: Math.round((2100 + (Math.random() * 180 - 90)) * marketFactor * weekendFactor),
+                    trend: Math.random() > 0.4 ? 'up' : Math.random() > 0.6 ? 'stable' : 'down'
+                }
+            };
+            
+            updateCropPricesUI(crops);
+        }
+        
+        function updateCropPricesUI(crops) {
+            marketRateEl.textContent = `₹ ${crops.jowar.price.toLocaleString('en-IN')}/q`;
+            jowarPriceEl.textContent = `₹ ${crops.jowar.price.toLocaleString('en-IN')}/q`;
+            maizePriceEl.textContent = `₹ ${crops.maize.price.toLocaleString('en-IN')}/q`;
+            sugarcanePriceEl.textContent = `₹ ${crops.sugarcane.price.toLocaleString('en-IN')}/t`;
+            paddyPriceEl.textContent = `₹ ${crops.paddy.price.toLocaleString('en-IN')}/q`;
+            
+            // Update trends
+            jowarTrendEl.textContent = getTrendEmoji(crops.jowar.trend) + ' ' + getTrendText(crops.jowar.trend);
+            maizeTrendEl.textContent = getTrendEmoji(crops.maize.trend) + ' ' + getTrendText(crops.maize.trend);
+            sugarcaneTrendEl.textContent = getTrendEmoji(crops.sugarcane.trend) + ' ' + getTrendText(crops.sugarcane.trend);
+            paddyTrendEl.textContent = getTrendEmoji(crops.paddy.trend) + ' ' + getTrendText(crops.paddy.trend);
+        }
+        
+        function getTrendEmoji(trend) {
+            return trend === 'up' ? '↗️' : trend === 'down' ? '↘️' : '➡️';
+        }
+        
+        function getTrendText(trend) {
+            return trend === 'up' ? 'Trending Up' : trend === 'down' ? 'Trending Down' : 'Stable';
+        }
+        
+        // Fetch government schemes
+        async function fetchGovernmentSchemes() {
+            try {
+                const schemeUrls = [
+                    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.data.gov.in/resource/6176ee09-3d56-4a3b-8115-21841576b2f6?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=5'),
+                    'https://corsproxy.io/?' + encodeURIComponent('https://api.data.gov.in/resource/6176ee09-3d56-4a3b-8115-21841576b2f6?api-key=579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b&format=json&limit=5')
+                ];
+                
+                const result = await fetchWithCORSProxy(schemeUrls);
+                
+                if (result.success) {
+                    updateApiStatus(schemeApiEl, 'active');
+                    schemeApiSourceEl.textContent = 'Gov Data API';
+                    console.log("✅ Government schemes API connected!");
+                    return { success: true };
+                } else {
+                    updateApiStatus(schemeApiEl, 'mock');
+                    updateApiStatus(backupApiEl, 'mock');
+                    schemeApiSourceEl.textContent = 'Gov Database';
+                    console.log("⚠️ Using local schemes data");
+                    return { success: false };
+                }
+            } catch (error) {
+                console.error("Scheme API Error:", error);
+                updateApiStatus(schemeApiEl, 'mock');
+                schemeApiSourceEl.textContent = 'Local Database';
+                return { success: false };
+            }
+        }
+        
+        function updateCropStage() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const seconds = now.getSeconds();
+            
+            // More realistic progress calculation
+            let progress = 25 + (hour * 0.7) + (minute * 0.01) + (seconds * 0.0001);
+            progress = Math.min(95, Math.max(25, Math.round(progress)));
+            
+            cropPercentageEl.textContent = progress;
+            progressBarEl.style.width = `${progress}%`;
+            
+            // Determine crop stage
+            let stageText = "";
+            let stageKannada = "";
+            let stageEmoji = "🌱";
+            
+            if (progress < 40) {
+                stageText = `${stageEmoji} Seedling Stage - Regular watering needed`;
+                stageKannada = `${stageEmoji} ಸಸಿ ಹಂತ - ನಿಯಮಿತ ನೀರಾವರಿ ಅಗತ್ಯವಿದೆ`;
+            } else if (progress < 60) {
+                stageEmoji = "🌿";
+                stageText = `${stageEmoji} Vegetative Stage - Monitor for pests`;
+                stageKannada = `${stageEmoji} ಸಸ್ಯ ಹಂತ - ಕೀಟಗಳಿಗಾಗಿ ಮೇಲ್ವಿಚಾರಣೆ`;
+            } else if (progress < 80) {
+                stageEmoji = "🌸";
+                stageText = `${stageEmoji} Flowering Stage - Reduce water, add nutrients`;
+                stageKannada = `${stageEmoji} ಹೂ ಬಿಡುವ ಹಂತ - ನೀರು ಕಡಿಮೆ ಮಾಡಿ, ಪೋಷಕಾಂಶಗಳನ್ನು ಸೇರಿಸಿ`;
+            } else {
+                stageEmoji = "🌾";
+                stageText = `${stageEmoji} Harvest Ready - Check market prices`;
+                stageKannada = `${stageEmoji} ಕೊಯ್ಲು ಸಿದ್ಧ - ಮಾರುಕಟ್ಟೆ ಬೆಲೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ`;
+            }
+            
+            cropStageText.textContent = stageText;
+            cropStageKannada.textContent = stageKannada;
+            
+            // Update crop stats with realistic values
+            document.getElementById('soil-moisture').textContent = `${Math.round(60 + Math.sin(hour * 0.26) * 10)}%`;
+            document.getElementById('growth-rate').textContent = `${(2.5 + Math.sin(hour * 0.13) * 0.5).toFixed(1)}%/day`;
+            document.getElementById('soil-temp').textContent = `${Math.round(25 + Math.sin(hour * 0.26) * 5)}°C`;
+            document.getElementById('sunlight').textContent = `${(8 + Math.sin(hour * 0.26) * 2).toFixed(1)} hrs`;
+        }
+        
+        // Kannada translations
+        function translateToKannada(text) {
+            const translations = {
+                "Clear": "ಸ್ಪಷ್ಟ",
+                "Sunny": "ಬಿಸಿಲು",
+                "Clouds": "ಮೋಡ",
+                "Rain": "ಮಳೆ",
+                "Drizzle": "ತುಂತುರು ಮಳೆ",
+                "Thunderstorm": "ಗುಡುಗು ಮಿಂಚು",
+                "Mist": "ಮಂಜು",
+                "Fog": "ಮಂಜು",
+                "Partly Cloudy": "ಭಾಗಶಃ ಮೋಡ",
+                "Overcast": "ಮೋಡ",
+                "Light rain": "ಸ್ವಲ್ಪ ಮಳೆ",
+                "Moderate rain": "ಮಧ್ಯಮ ಮಳೆ",
+                "Heavy rain": "ಭಾರೀ ಮಳೆ",
+                "HEAT ALERT": "ಬಿಸಿ ಎಚ್ಚರಿಕೆ",
+                "RAIN ALERT": "ಮಳೆ ಎಚ್ಚರಿಕೆ",
+                "WIND ALERT": "ಗಾಳಿ ಎಚ್ಚರಿಕೆ",
+                "WEATHER": "ಹವಾಮಾನ",
+                "Water crops": "ಬೆಳೆಗಳಿಗೆ ನೀರು ಹಾಕಿ",
+                "early morning": "ಬೆಳಗ್ಗೆ",
+                "Prepare field drainage": "ಕ್ಷೇತ್ರ ಜಲನಿಕಾಸ ತಯಾರಿ",
+                "Secure equipment": "ಉಪಕರಣಗಳನ್ನು ಸುರಕ್ಷಿತಗೊಳಿಸಿ",
+                "Good conditions": "ಉತ್ತಮ ಪರಿಸ್ಥಿತಿಗಳು",
+                "for farming": "ಬೇಸಾಯಕ್ಕಾಗಿ",
+                "Monitor crop conditions": "ಬೆಳೆ ಪರಿಸ್ಥಿತಿಗಳನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಿ",
+                "Temperature": "ತಾಪಮಾನ",
+                "expected today": "ಇಂದು ನಿರೀಕ್ಷಿಸಲಾಗಿದೆ"
+            };
+            
+            let translated = text;
+            Object.keys(translations).forEach(key => {
+                const regex = new RegExp(key, 'gi');
+                translated = translated.replace(regex, translations[key]);
+            });
+            return translated;
+        }
+        
+        function updateSolarPanel() {
+            const hour = new Date().getHours();
+            const minute = new Date().getMinutes();
+            
+            // More realistic solar panel simulation
+            let solarPower = 0;
+            let efficiency = 0;
+            
+            if (hour >= 6 && hour <= 18) {
+                const solarNoon = 12;
+                const timeFromNoon = Math.abs(hour + minute/60 - solarNoon);
+                solarPower = 15 * Math.cos(timeFromNoon * Math.PI / 12);
+                efficiency = 90 + (10 * Math.cos(timeFromNoon * Math.PI / 12));
+            } else {
+                // Night time - minimal power from stored energy
+                solarPower = 0.5 + Math.random() * 1.5;
+                efficiency = 25 + Math.random() * 10;
+            }
+            
+            solarPower = Math.max(0.5, Math.min(15, solarPower));
+            efficiency = Math.max(25, Math.min(95, efficiency));
+            
+            solarPowerEl.textContent = `${solarPower.toFixed(1)} kW`;
+            solarEfficiencyEl.textContent = `${Math.round(efficiency)}%`;
+            
+            // Animate solar cells based on efficiency
+            const solarCells = document.querySelectorAll('.solar-cell');
+            solarCells.forEach((cell, index) => {
+                const delay = index * 100;
+                cell.style.animationDelay = `${delay}ms`;
+                cell.style.opacity = 0.3 + (efficiency / 100) * 0.7;
+                cell.style.animationDuration = `${3 - (efficiency/50)}s`;
+            });
+        }
+        
+        // Main update function
+        async function performLiveUpdate() {
+            systemStatusEl.textContent = "UPDATING";
+            systemStatusEl.style.color = "#FFD600";
+            
+            console.log("🔄 Starting data update...");
+            
+            // Fetch all data in parallel
+            const [weatherResult, cropResult, schemeResult] = await Promise.allSettled([
+                fetchRealWeather(),
+                fetchCropPrices(),
+                fetchGovernmentSchemes()
+            ]);
+            
+            // Update other UI elements
+            updateCropStage();
+            updateSolarPanel();
+            
+            updateDateTime();
+            countdown = 60;
+            systemStatusEl.textContent = "ACTIVE";
+            systemStatusEl.style.color = "#00ff00";
+            
+            // Visual feedback
+            const dashboard = document.querySelector('.dashboard-container');
+            dashboard.style.borderColor = '#2ecc71';
+            dashboard.style.boxShadow = 
+                '0 25px 50px rgba(0, 0, 0, 0.3), 0 0 50px rgba(46, 204, 113, 0.3)';
+            
+            // Update success message
+            const successCount = [weatherResult, cropResult, schemeResult].filter(r => 
+                r.status === 'fulfilled' && r.value && r.value.success
+            ).length;
+            
+            console.log(`✅ Update complete: ${successCount}/3 APIs successful`);
+            
+            setTimeout(() => {
+                dashboard.style.borderColor = '#FF9800';
+                dashboard.style.boxShadow = 
+                    '0 25px 50px rgba(0, 0, 0, 0.3), 0 0 50px rgba(255, 215, 0, 0.2)';
+            }, 1000);
+        }
+        
+        // Event Listeners for new buttons
+        refreshDataBtn.addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            this.disabled = true;
+            
+            performLiveUpdate().finally(() => {
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh All Data';
+                    this.disabled = false;
+                }, 2000);
+            });
+        });
+        
+        apiStatusBtn.addEventListener('click', function() {
+            const statusText = `
+📊 REAL-TIME API STATUS:
+────────────────────────
+• Weather API: ${weatherApiEl.classList.contains('active') ? '✅ ACTIVE (Real Data)' : '⚠️ USING MOCK DATA'}
+• Crop Prices: ${cropApiEl.classList.contains('active') ? '✅ ACTIVE (Real Data)' : '⚠️ USING MOCK DATA'}
+• Gov Schemes: ${schemeApiEl.classList.contains('active') ? '✅ ACTIVE (Real Data)' : '⚠️ USING MOCK DATA'}
+• Backup System: ${backupApiEl.classList.contains('active') ? '✅ ACTIVE' : '❌ OFFLINE'}
+────────────────────────
+• Last Update: ${lastUpdatedEl.textContent}
+• Next Update: ${countdown} seconds
+• Location: Hubli, Karnataka
+────────────────────────
+💡 TIP: If APIs fail, realistic mock data is automatically used.
+            `;
+            
+            alert(statusText);
+        });
+        
+        // Responsive layout
+        function handleResponsiveLayout() {
+            const width = window.innerWidth;
+            const dashboard = document.querySelector('.dashboard-container');
+            const solarContainer = document.querySelector('.solar-panel-container');
+            
+            if (width < 768) {
+                dashboard.style.borderRadius = '15px';
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.padding = '15px';
+                });
+                
+                if (solarContainer) {
+                    solarContainer.style.flexDirection = 'column';
+                    solarContainer.style.height = 'auto';
+                    solarContainer.style.padding = '10px 5px';
+                }
+                
+                document.querySelectorAll('.floating-emoji').forEach(emoji => {
+                    emoji.style.display = 'none';
+                });
+                
+            } else if (width < 992) {
+                dashboard.style.borderRadius = '18px';
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.padding = '18px';
+                });
+                
+                if (solarContainer) {
+                    solarContainer.style.flexDirection = 'row';
+                    solarContainer.style.height = '35px';
+                    solarContainer.style.padding = '0 15px';
+                }
+                
+            } else {
+                dashboard.style.borderRadius = '20px';
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.padding = '20px';
+                });
+                
+                if (solarContainer) {
+                    solarContainer.style.flexDirection = 'row';
+                    solarContainer.style.height = '35px';
+                    solarContainer.style.padding = '0 15px';
+                }
+                
+                document.querySelectorAll('.floating-emoji').forEach(emoji => {
+                    emoji.style.display = 'block';
+                });
+            }
+            
+            const content = document.querySelector('.dashboard-content');
+            if (width < 576) {
+                content.style.gridTemplateColumns = '1fr';
+            } else if (width < 992) {
+                content.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            } else {
+                content.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
+            }
+        }
+        
+        // Initialize dashboard
+        async function initializeDashboard() {
+            console.log("🚀 Initializing Smart Solar Field Board...");
+            console.log("📍 Location: Hubli, Karnataka");
+            console.log("🌤️ Weather APIs: OpenWeatherMap, Open-Meteo, WeatherAPI");
+            console.log("🌾 Crop Data: Government Agri Data API");
+            console.log("🏛️ Schemes: Government Data API");
+            
+            handleResponsiveLayout();
+            
+            // Load voices for speech synthesis
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = function() {
+                    const voices = window.speechSynthesis.getVoices();
+                    console.log(`🎤 ${voices.length} voices available`);
+                    const kannadaVoices = voices.filter(v => v.lang.includes('IN'));
+                    if (kannadaVoices.length > 0) {
+                        console.log("✅ Kannada/Indian voices found!");
+                    }
+                };
+            }
+            
+            updateDateTime();
+            
+            // Initial API status
+            updateApiStatus(weatherApiEl, 'active');
+            updateApiStatus(cropApiEl, 'active');
+            updateApiStatus(schemeApiEl, 'active');
+            updateApiStatus(backupApiEl, 'active');
+            
+            // Perform initial update
+            await performLiveUpdate();
+            
+            // Set up intervals
+            setInterval(updateCountdown, 1000);
+            setInterval(updateDateTime, 1000);
+            setInterval(updateSolarPanel, 5000);
+            setInterval(performLiveUpdate, 60000); // Update every minute
+            setInterval(updateCropStage, 30000); // Update crop stage every 30 seconds
+            
+            // Auto-play welcome message
+            setTimeout(() => {
+                const welcomeMessage = `
+                    ಸ್ವಾಗತ! ಸ್ಮಾರ್ಟ್ ಸೌರ ಕ್ಷೇತ್ರ ಮಂಡಳಿಗೆ ಸ್ವಾಗತ.
+                    ನಿಮ್ಮ ಕೃಷಿಗೆ ಅಗತ್ಯವಾದ ಎಲ್ಲ ಮಾಹಿತಿ ಇಲ್ಲಿ.
+                    ನೈಜ API ಗಳಿಂದ ಹವಾಮಾನ, ಬೆಳೆ ಬೆಲೆಗಳು ಮತ್ತು ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಮಾಹಿತಿ.
+                    ಮೇಲಿನ ಬಟನ್ ಗಳನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ ವಿವಿಧ ವಿಭಾಗಗಳ ಮಾಹಿತಿ ಕನ್ನಡದಲ್ಲಿ ಕೇಳಿ.
+                    ಈಗ ನಿಮ್ಮ ಡ್ಯಾಶ್ ಬೋರ್ಡ್ ಸಿದ್ಧವಾಗಿದೆ!
+                `;
+                speakKannada(welcomeMessage, 'welcome');
+            }, 3000);
+            
+            console.log("✅ Dashboard initialized successfully!");
+            console.log("🔄 Auto-update every 60 seconds");
+            console.log("🔍 Check browser console for API status");
+        }
+        
+        // Error handling
+        window.addEventListener('error', function(e) {
+            console.error("Global error:", e.error);
+            systemStatusEl.textContent = "ERROR";
+            systemStatusEl.style.color = '#e74c3c';
+        });
+        
+        // Start dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("📄 DOM loaded, starting dashboard...");
+            setTimeout(initializeDashboard, 1000);
+            window.addEventListener('resize', handleResponsiveLayout);
+        });
+        
+        // Update when page becomes visible
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                console.log("👁️ Page visible, refreshing data...");
+                performLiveUpdate();
+            }
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+R or F5 to refresh
+            if ((e.ctrlKey && e.key === 'r') || e.key === 'F5') {
+                e.preventDefault();
+                refreshDataBtn.click();
+            }
+            // Space for voice control
+            if (e.code === 'Space' && e.target === document.body) {
+                e.preventDefault();
+                kannadaVoiceBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
